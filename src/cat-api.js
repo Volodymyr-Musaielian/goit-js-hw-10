@@ -8,9 +8,13 @@ const options = {
 };
 
 export function fetchBreeds() {
-  return fetch(url, options).then(r => r.json());
+  return fetch(url, options).then(r => {
+    if (!r.ok) {
+      throw new Error(r.status);
+    }
+    return r.json();
+  });
 }
-
 export function fetchCatByBreed(breedId) {
   return fetch(
     `https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`,
